@@ -8,32 +8,10 @@
 using namespace Rcpp;
 
 
-// // Function declarations.
-//
-// #ifndef FUNCTION_DECLARATIONS
-// #define FUNCTION_DECLARATIONS
-//
-//
-// double evaluate_log_prior(const NumericVector &inputs);
-//
-// NumericVector simulate_prior();
-//
-// double evaluate_log_likelihood(const NumericVector &inputs, const NumericVector &data);
-//
-// List simulate_model(const NumericVector &inputs, const NumericVector &data);
-//
-// NumericVector simulate_importance_proposal(void);
-//
-//
-// #endif
-
-
-
 // typedefs for function pointers
 
 #ifndef TYPEDEFS
 #define TYPEDEFS
-
 
 typedef double (*EvaluateLogDistributionPtr)(const NumericVector &inputs);
 
@@ -59,17 +37,3 @@ typedef NumericMatrix (*GetDataFromSimulationPtr)(const List &simulation);
 
 
 #endif
-
-
-
-// functions to "save" function pointers
-
-#ifndef SAVE_FUNCTION_POINTERS_H
-#define SAVE_FUNCTION_POINTERS_H
-
-
-
-
-
-#endif
-
