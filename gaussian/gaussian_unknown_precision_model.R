@@ -1,19 +1,24 @@
 evaluate_log_prior = function(inputs)
 {
-  dgamma(inputs,1,1,log=TRUE)
+  return(dgamma(inputs$precision, 1, 1, log=TRUE))
 }
 
 simulate_prior = function()
 {
-  rgamma(1,1,1)
+  return(list(precision=rgamma(1, 1, 1)))
 }
 
-evaluate_log_likelihood = function(inputs,data)
+evaluate_log_likelihood = function(inputs, observed_data)
 {
-  sum(dnorm(data,mean=0,sd=inputs,log=TRUE))
+  return(sum(dnorm(observed_data$data, mean=0, sd=1/sqrt(inputs$precision), log=TRUE)))
 }
 
-simulate_model = function(inputs,data)
+simulate_model = function(inputs, observed_data)
 {
-  rnorm(length(data),mean=0,sd=inputs)
+  return(list(data = rnorm(length(observed_data$data), mean=0, sd=1/sqrt(inputs$precision))))
+}
+
+summary_statistics = function(observed_data)
+{
+  return(observed_data$data)
 }

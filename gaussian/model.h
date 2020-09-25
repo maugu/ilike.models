@@ -4,29 +4,10 @@
 ////////////////////////////////////////////////
 
 
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+
 using namespace Rcpp;
-
-
-// // Function declarations.
-//
-// #ifndef FUNCTION_DECLARATIONS
-// #define FUNCTION_DECLARATIONS
-//
-//
-// double evaluate_log_prior(const NumericVector &inputs);
-//
-// NumericVector simulate_prior();
-//
-// double evaluate_log_likelihood(const NumericVector &inputs, const NumericVector &data);
-//
-// List simulate_model(const NumericVector &inputs, const NumericVector &data);
-//
-// NumericVector simulate_importance_proposal(void);
-//
-//
-// #endif
-
 
 
 // typedefs for function pointers
@@ -34,42 +15,27 @@ using namespace Rcpp;
 #ifndef TYPEDEFS
 #define TYPEDEFS
 
+typedef double (*EvaluateLogDistributionPtr)(const List &inputs);
 
-typedef double (*EvaluateLogDistributionPtr)(const NumericVector &inputs);
+typedef List (*SimulateDistributionPtr)(void);
 
-typedef NumericVector (*SimulateDistributionPtr)(void);
+typedef double (*EvaluateLogLikelihoodPtr)(const List &inputs, const List &observed_data);
 
-typedef double (*EvaluateLogLikelihoodPtr)(const NumericVector &inputs, const NumericMatrix &data);
+typedef double (*EstimateLogLikelihoodPtr)(const List &inputs, const List &observed_data, const List &auxiliary_variables);
 
-typedef double (*EstimateLogLikelihoodPtr)(const NumericVector &inputs, const NumericMatrix &data, const List &auxiliary_variables);
+typedef List (*SimulateModelPtr)(const List &inputs, const List &observed_data);
 
-typedef List (*SimulateModelPtr)(const NumericVector &inputs, const NumericMatrix &data);
+typedef List (*SimulateAuxiliaryVariablesPtr)(const List &inputs, const List &observed_data);
 
-typedef List (*SimulateAuxiliaryVariablesPtr)(const NumericVector &inputs, const NumericMatrix &data);
+typedef XPtr<EstimateLogLikelihoodPtr> (*SetupLikelihoodEstimatorPtr)(const List &inputs, const List &auxiliary_variables);
 
-typedef XPtr<EstimateLogLikelihoodPtr> (*SetupLikelihoodEstimatorPtr)(const NumericMatrix &inputs, const List &auxiliary_variables);
-
-typedef double (*EvaluateLogABCKernelPtr)(const NumericVector &simulated_stats,
-                const NumericVector &observed_stats,
+typedef double (*EvaluateLogABCKernelPtr)(const arma::colvec &simulated_stats,
+                const arma::colvec &observed_stats,
                 const double &abc_tolerance);
 
-typedef NumericVector (*SummaryStatisticsPtr)(const NumericMatrix &data);
+typedef arma::colvec (*SummaryStatisticsPtr)(const List &observed_data);
 
-typedef NumericMatrix (*GetDataFromSimulationPtr)(const List &simulation);
-
-
-#endif
-
-
-
-// functions to "save" function pointers
-
-#ifndef SAVE_FUNCTION_POINTERS_H
-#define SAVE_FUNCTION_POINTERS_H
-
-
-
+typedef List (*Getobserved_dataFromSimulationPtr)(const List &simulation);
 
 
 #endif
-

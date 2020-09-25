@@ -4,7 +4,9 @@
 ////////////////////////////////////////////////
 
 
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+
 using namespace Rcpp;
 
 
@@ -13,27 +15,27 @@ using namespace Rcpp;
 #ifndef TYPEDEFS
 #define TYPEDEFS
 
-typedef double (*EvaluateLogDistributionPtr)(const NumericVector &inputs);
+typedef double (*EvaluateLogDistributionPtr)(const List &inputs);
 
-typedef NumericVector (*SimulateDistributionPtr)(void);
+typedef List (*SimulateDistributionPtr)(void);
 
-typedef double (*EvaluateLogLikelihoodPtr)(const NumericVector &inputs, const NumericMatrix &data);
+typedef double (*EvaluateLogLikelihoodPtr)(const List &inputs, const List &observed_data);
 
-typedef double (*EstimateLogLikelihoodPtr)(const NumericVector &inputs, const NumericMatrix &data, const List &auxiliary_variables);
+typedef double (*EstimateLogLikelihoodPtr)(const List &inputs, const List &observed_data, const List &auxiliary_variables);
 
-typedef List (*SimulateModelPtr)(const NumericVector &inputs, const NumericMatrix &data);
+typedef List (*SimulateModelPtr)(const List &inputs, const List &observed_data);
 
-typedef List (*SimulateAuxiliaryVariablesPtr)(const NumericVector &inputs, const NumericMatrix &data);
+typedef List (*SimulateAuxiliaryVariablesPtr)(const List &inputs, const List &observed_data);
 
-typedef XPtr<EstimateLogLikelihoodPtr> (*SetupLikelihoodEstimatorPtr)(const NumericMatrix &inputs, const List &auxiliary_variables);
+typedef XPtr<EstimateLogLikelihoodPtr> (*SetupLikelihoodEstimatorPtr)(const List &inputs, const List &auxiliary_variables);
 
-typedef double (*EvaluateLogABCKernelPtr)(const NumericVector &simulated_stats,
-                const NumericVector &observed_stats,
+typedef double (*EvaluateLogABCKernelPtr)(const arma::colvec &simulated_stats,
+                const arma::colvec &observed_stats,
                 const double &abc_tolerance);
 
-typedef NumericVector (*SummaryStatisticsPtr)(const NumericMatrix &data);
+typedef arma::colvec (*SummaryStatisticsPtr)(const List &observed_data);
 
-typedef NumericMatrix (*GetDataFromSimulationPtr)(const List &simulation);
+typedef List (*GetDataFromSimulationPtr)(const List &simulation);
 
 
 #endif
