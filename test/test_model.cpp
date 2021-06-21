@@ -1,7 +1,5 @@
 // [[Rcpp::plugins("cpp11")]]
 
-
-
 // [[Rcpp::depends(RcppArmadillo, ilike, BH)]]
 
 #include <ilike.h>
