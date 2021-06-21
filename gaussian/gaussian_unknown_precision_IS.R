@@ -4,7 +4,7 @@ library(tictoc)
 
 data(gaussian)
 
-number_of_points = 1000000
+number_of_points = 50000
 number_of_likelihood_particles = 50
 
 
@@ -21,7 +21,7 @@ model = list(simulate_prior = simulate_prior,
 algorithm = list(number_of_points = number_of_points)
 
 tic()
-exact_r_output = importance_sample(model, algorithm)
+#exact_r_output = importance_sample(model, algorithm)
 toc()
 
 

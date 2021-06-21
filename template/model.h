@@ -29,9 +29,12 @@ typedef List (*SimulateAuxiliaryVariablesPtr)(const List &inputs, const List &ob
 
 typedef XPtr<EstimateLogLikelihoodPtr> (*SetupLikelihoodEstimatorPtr)(const List &inputs, const List &auxiliary_variables);
 
-typedef double (*EvaluateLogABCKernelPtr)(const arma::colvec &simulated_stats,
-                const arma::colvec &observed_stats,
-                const double &abc_tolerance);
+typedef double (*EvaluateLogABCKernelPtr)(const double &distance,
+                const double &tolerance,
+                const unsigned int &summary_statistics_dimension);
+
+typedef double (*ABCDistancePtr)(const arma::colvec &simulated_stats,
+                const arma::colvec &observed_stats);
 
 typedef arma::colvec (*SummaryStatisticsPtr)(const List &observed_data);
 
