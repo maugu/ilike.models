@@ -1,6 +1,6 @@
 // [[Rcpp::plugins("cpp11")]]
 
-// [[Rcpp::depends(RcppArmadillo, ilike, BH)]]
+// [[Rcpp::depends(ilike, RcppArmadillo, BH, dqrng, sitmo)]]
 
 #include <ilike.h>
 
@@ -15,6 +15,7 @@ double evaluate_log_prior(const Parameters &inputs)
 {
   //sleep(5);
   double output = sum(inputs["theta"]);
+  //double output;// sum(inputs.find("theta")->second);
   return output;
 }
 
@@ -25,24 +26,23 @@ XPtr<EvaluateLogDistributionPtr> store_evaluate_log_prior()
 }
 
 
-
 ///////////////////////////////////////////
 // Simulate from prior.                  //
 ///////////////////////////////////////////
 
-// [[Rcpp::export]]
-Parameters simulate_prior(double dummy)
+Parameters simulate_prior(rng_ptr rng)
 {
+  sleep(5);
   Parameters output;
-  arma::colvec my_vec(2, arma::fill::zeros);
-  my_vec[0] = 2.0;
-  output["theta"] = my_vec;
-  output["theta"][1] = 6.0;
-  Rcout << my_vec << std::endl;
-  Rcout << output["theta"][1] << std::endl;
-  Rcout << output << std::endl;
+  // arma::colvec my_vec(2, arma::fill::zeros);
+  // my_vec[0] = 2.0;
+  output["theta"] = simulate_normal(rng, 5.0, 0.1);
+  // output["theta"][1] = 6.0;
+  // Rcout << my_vec << std::endl;
+  // Rcout << output["theta"][1] << std::endl;
+  // Rcout << output << std::endl;
+  // return output;
   return output;
-  //return Parameters();//1.0;
 }
 
 // [[Rcpp::export]]
@@ -50,6 +50,7 @@ XPtr<SimulateDistributionPtr> store_simulate_prior()
 {
   return(XPtr<SimulateDistributionPtr>(new SimulateDistributionPtr(&simulate_prior)));
 }
+
 
 
 
