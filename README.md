@@ -1,2 +1,2 @@
-# ilike-models
+# ilikemodels
 Models that use the ilike package.
