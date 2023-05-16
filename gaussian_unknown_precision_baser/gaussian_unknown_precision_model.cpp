@@ -10,3 +10,4 @@
 /***simulate_prior,tau=rlnorm(1,1,1)***/
 
 /***evaluate_log_likelihood,sum(dnorm(data.y,0,1/sqrt(parameters.tau),TRUE))***/
+
