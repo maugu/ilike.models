@@ -10,7 +10,19 @@ Data data()
   return data;
 }
 
-/***prior,ilike::lnorm(tau,1,1)***/
+/***evaluate_log_prior***/
+double evaluate_log_prior(const Parameters &parameters)
+{
+  return dlnorm(parameters["tau"][0], 1.0, 1.0);
+}
+
+/***simulate_prior***/
+Parameters simulate_prior(RandomNumberGenerator &rng)
+{
+  Parameters output;
+  output["tau"] = rlnorm(rng, 1.0, 1.0);
+  return output;
+}
 
 /***evaluate_log_likelihood***/
 double evaluate_log_likelihood(const Parameters &parameters, const Data &data)

@@ -1,6 +1,3 @@
-import Pkg; Pkg.add("Distributions")
-using Random, Distributions
-
 function my_rnorm(n)
   d = Normal()
   rand(d, n)

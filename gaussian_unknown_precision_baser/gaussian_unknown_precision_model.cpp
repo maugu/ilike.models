@@ -1,8 +1,3 @@
-// [[Rcpp::plugins("cpp11")]]
-// [[Rcpp::depends(ilike, RcppArmadillo, BH, dqrng, sitmo)]]
-
-#include <ilike.h>
-
 /***data,y=rnorm(100)***/
 
 /***evaluate_log_prior,dlnorm(parameters.tau,1,1,TRUE)***/

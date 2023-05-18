@@ -1,6 +1,10 @@
 /***data,y=my_rnorm(100L)***/
 
-/***evaluate_log_prior,my_dlnorm(parameters.tau,1,1,TRUE)***/
+/***evaluate_log_prior***/
+double evaluate_log_prior(const Parameters &parameters)
+{
+  return dlnorm(parameters["tau"][0], 1.0, 1.0);
+}
 
 /***simulate_prior,tau=my_rlnorm(1L,1,1)***/
 
