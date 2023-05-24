@@ -30,3 +30,17 @@ double evaluate_log_likelihood(const Parameters &parameters, const Data &data)
   double precision = parameters["tau"][0];
   return sum(dnorm(data["y"], 0.0, 1.0/sqrt(precision)));
 }
+
+/***evaluate_log_importance_proposal***/
+double evaluate_log_importance_proposal(const Parameters &parameters)
+{
+  return dgamma(parameters["tau"][0], 0.1, 0.1);
+}
+
+/***simulate_importance_proposal***/
+Parameters simulate_importance_proposal(RandomNumberGenerator &rng)
+{
+  Parameters output;
+  output["tau"] = rgamma(rng, 0.1, 0.1);
+  return output;
+}
