@@ -24,12 +24,29 @@ Parameters simulate_prior(RandomNumberGenerator &rng)
   return output;
 }
 
-/***evaluate_log_likelihood***/
-double evaluate_log_likelihood(const Parameters &parameters, const Data &data)
+//#
+
+/***simulate_data_model***/
+Data simulate_data_model(RandomNumberGenerator &rng,
+                    const Parameters &parameters)
 {
-  double precision = parameters["tau"][0];
-  return sum(dnorm(data["y"], 0.0, 1.0/sqrt(precision)));
+  size_t n = 100;
+  arma::colvec sampled = rnorm(rng,n);
+  Data data;
+  data["y"] = sampled;
+  return data;
 }
+
+/***sbi_likelihood,ilike::abc_euclidean_uniform(sd,1,epsilon,25,false)***/
+
+/***summary_statistics***/
+Data summary_stats(const Data &data)
+{
+  arma::mat sd = arma::stddev(data["y"]);
+  return Data("sd",sd);
+}
+
+//#
 
 /***evaluate_log_importance_proposal***/
 double evaluate_log_importance_proposal(const Parameters &parameters)
@@ -44,6 +61,8 @@ Parameters simulate_importance_proposal(RandomNumberGenerator &rng)
   output["tau"] = rgamma(rng, 0.1, 0.1);
   return output;
 }
+
+//#
 
 /***simulate_mh_proposal***/
 Parameters simulate_mh_proposal(RandomNumberGenerator &rng,
@@ -61,8 +80,8 @@ double some_function(const Parameters &proposed_parameters,
   return dnorm(proposed_parameters["tau"][0],parameters["tau"][0],0.001);
 }
 
+//#
+
 /***mcmc_weights,c(1)***/
 
-/***mcmc_termination,ilike::iterations(10000)***/
-
-/***smc_sequence,ilike::annealing(power,c(0,p1,1))***/
+/***mcmc_termination,ilike::iterations(1000)***/
